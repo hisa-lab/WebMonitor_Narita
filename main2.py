@@ -1,4 +1,4 @@
-import requests, bs4, os ,smtplib ,hashlib
+import requests, bs4, os ,hashlib
 htmls = ['https://gigazine.net/','http://blog.livedoor.jp/itsoku/','https://nlab.itmedia.co.jp/']
 
 

@@ -36,3 +36,7 @@ for html in htmls:
                 print(elem.get_text(),file=f)
             f.flush()
             os.fsync(f.fileno())
+        with open(f'{html_md5}' + 'result.txt','a',encoding="utf-8") as f:
+            pass
+            f.flush()
+            os.fsync(f.fileno())

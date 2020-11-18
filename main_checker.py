@@ -8,8 +8,13 @@ for html in htmls:
     res = requests.get(html)
     res.raise_for_status()
     soup = bs4.BeautifulSoup(res.text, 'html.parser')
-    elems = soup.select('h2')
-    gets = []
+    for script in soup(["script","style"]):
+        script.decompose()
+    text = soup.get_text()
+    lines = [line.strip() for line in text.splitlines()]
+    text="\n".join(line for line in lines if line)
+    oks = []
+    oks = text.splitlines()
     rawhtml = html.replace('/','').replace(':','').replace('https','').replace('http','')
     with open(f'{html_md5}.txt','a',encoding="utf-8") as f:
         pass
@@ -19,9 +24,7 @@ for html in htmls:
     if judge != 0:
         with open(f'{html_md5}.txt','r',encoding="utf-8") as f:
             beforelists = f.read().splitlines()
-        for elem in elems:
-            gets.append(elem.get_text())
-        diff = list(filter(lambda x: x not in beforelists,gets))
+        diff = list(filter(lambda x: x not in beforelists,oks))
         jexport = {
                     "url" : f"{html}",
                     "update" : f"{dt_now}",
@@ -32,11 +35,11 @@ for html in htmls:
     else:
         pass
 
-PORT = 8000
-DIRECTORY="links"
-class Handler(http.server.SimpleHTTPRequestHandler):
-    def __init__(self,*args,**kwargs):
-        super().__init__(*args,directory=DIRECTORY,**kwargs)
-with socketserver.TCPServer(("", PORT), Handler) as httpd:
-    print("serving at port", PORT)
-    httpd.serve_forever()
+#PORT = 8000
+#DIRECTORY="links"
+#class Handler(http.server.SimpleHTTPRequestHandler):
+#    def __init__(self,*args,**kwargs):
+#        super().__init__(*args,directory=DIRECTORY,**kwargs)
+#with socketserver.TCPServer(("", PORT), Handler) as httpd:
+#    print("serving at port", PORT)
+#    httpd.serve_forever()

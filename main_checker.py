@@ -35,12 +35,3 @@ for html in htmls:
             json.dump(jexport,f,indent=2,ensure_ascii=False)
     else:
         pass
-
-#PORT = 8000
-#DIRECTORY="links"
-#class Handler(http.server.SimpleHTTPRequestHandler):
-#    def __init__(self,*args,**kwargs):
-#        super().__init__(*args,directory=DIRECTORY,**kwargs)
-#with socketserver.TCPServer(("", PORT), Handler) as httpd:
-#    print("serving at port", PORT)
-#    httpd.serve_forever()
